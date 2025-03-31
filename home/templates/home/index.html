@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<header class="masthead bg-index text-white text-center py-4">
+  <div class="container d-flex align-items-center flex-column pt-2">
+    <h2>Movies Store</h2>
+    <p>Your Ticket to Unlimited Entertainment!</p>
+  </div>
+</header>
+
+<div class="hero-container">
+  <img src="{% static 'img/0.jpg' %}" alt="Movie Store Banner" class="hero-img">
+</div>
+
+{% endblock content %}

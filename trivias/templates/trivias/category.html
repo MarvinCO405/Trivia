@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-3">
+  <div class="container">
+    <h2>{{ trivia.name }} Trivia</h2>
+    <p>Trivia questions for {{ trivia.name }} will go here.</p>
+    <a href="{% url 'trivia_index' %}">Back to Categories</a>
+  </div>
+</div>
+{% endblock content %}
