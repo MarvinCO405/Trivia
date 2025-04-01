@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="p-3">
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col mx-auto mb-3 text-center">
+                <h2>{{ template_data.trivia.name }}</h2>
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            {% for question in trivia_questions %}
+            <div class="col-md-3 col-sm-6 mb-3">
+                <div class="card p-3 text-center" data-bs-toggle="modal" data-bs-target="#triviaModal{{ forloop.counter }}">
+                    <div class="card-body">
+                        <h5 class="card-title">Question {{ forloop.counter }}</h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal for each question -->
+            <div class="modal fade" id="triviaModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="modalLabel{{ forloop.counter }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel{{ forloop.counter }}">Question {{ forloop.counter }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p><strong>{{ question.question }}</strong></p>
+                            <ul class="list-group">
+                                {% for answer in question.incorrect_answers %}
+                                    <li class="list-group-item">{{ answer }}</li>
+                                {% endfor %}
+                                <li class="list-group-item text-success"><strong>{{ question.correct_answer }}</strong></li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

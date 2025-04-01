@@ -1,28 +1,30 @@
 {% extends 'base.html' %}
-
 {% block content %}
+{% load static %}
 <div class="p-3">
-  <div class="container">
-    <div class="row mt-3">
-      <div class="col mx-auto mb-3">
-        <h2>Type of Trivia</h2>
-        <hr />
-      </div>
-    </div>
-    <div class="row">
-      {% for trivia in trivias %}
-      <div class="col-md-4 col-lg-3 mb-2">
-        <a href="{% url 'trivias:trivia_category' trivia.id %}">{{ trivia.name }}</a>
-          <div class="p-2 card align-items-center pt-4">
-            <img src="/static/img/about.jpg" class="card-img-top rounded" alt="{{ trivia.name }}">
-            <div class="card-body text-center">
-              <h5>{{ trivia.name }}</h5>
-            </div>
-          </div>
-        </a>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
+ <div class="container">
+ <div class="row mt-3">
+ <div class="col mx-auto mb-3">
+ <h2>Types of Trivia</h2>
+ <hr />
+ </div>
+ </div>
+ <div class="row">
+ {% for trivia in template_data.trivias %}
+ <div class="col-md-4 col-lg-3 mb-2">
+ <div class="p-2 card align-items-center pt-4">
+ <img src="{% static 'img/about.jpg' %}"
+ class="card-img-top rounded">
+ <div class="card-body text-center">
+  <a href="{% url 'trivias.show' id=trivia.id %}"
+ class="btn bg-dark text-white">
+ {{ trivia.name }}
+   </a>
+ </div>
+ </div>
+     </div>
+ {% endfor %}
+ </div>
+ </div>
 </div>
 {% endblock content %}

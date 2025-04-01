@@ -33,7 +33,7 @@ def login(request):
                 template_data['error'] = 'You are not an admin.'
                 return render(request, 'accounts/login.html', {'template_data': template_data})
         else:
-            return redirect('trivias:index')
+            return redirect('trivias.index')
 
 
 def signup(request):
