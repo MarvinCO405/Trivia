@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
+{% block content %}
 
 <div class="p-3">
     <div class="container">
@@ -11,9 +11,15 @@
             </div>
         </div>
         <div class="row">
+            <div class="row mb-3">
+                <div class="col text-center">
+                    <h4>Score: <span id="score">0</span></h4>
+                </div>
+            </div>
+
             {% for question in trivia_questions %}
             <div class="col-md-3 col-sm-6 mb-3">
-                <div class="card p-3 text-center" data-bs-toggle="modal" data-bs-target="#triviaModal{{ forloop.counter }}">
+                <div class="card p-3 text-center" data-bs-toggle="modal" data-bs-target="#triviaModal{{ forloop.counter }}" onclick="startTimer({{ forloop.counter }}, '{{ question.correct_answer|escapejs }}')">
                     <div class="card-body">
                         <h5 class="card-title">Question {{ forloop.counter }}</h5>
                     </div>
@@ -30,12 +36,27 @@
                         </div>
                         <div class="modal-body">
                             <p><strong>{{ question.question }}</strong></p>
-                            <ul class="list-group">
-                                {% for answer in question.incorrect_answers %}
-                                    <li class="list-group-item">{{ answer }}</li>
-                                {% endfor %}
-                                <li class="list-group-item text-success"><strong>{{ question.correct_answer }}</strong></li>
-                            </ul>
+                            <div class="mb-2">Time remaining: <span id="timer-{{ forloop.counter }}">15</span> seconds</div>
+                            <form id="form-{{ forloop.counter }}" onsubmit="checkAnswer(event, {{ forloop.counter }}, '{{ question.correct_answer|escapejs }}')">
+                                <ul class="list-group" id="answers-list-{{ forloop.counter }}">
+                                    {% for answer in question.incorrect_answers %}
+                                        <li class="list-group-item">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input me-2" name="question{{ forloop.counter }}" value="{{ answer }}">
+                                                {{ answer }}
+                                            </label>
+                                        </li>
+                                    {% endfor %}
+                                    <li class="list-group-item">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input me-2" name="question{{ forloop.counter }}" value="{{ question.correct_answer }}">
+                                            {{ question.correct_answer }}
+                                        </label>
+                                    </li>
+                                </ul>
+                                <div id="feedback-{{ forloop.counter }}" class="mt-2"></div>
+                                <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                            </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -48,4 +69,65 @@
     </div>
 </div>
 
-{% endblock content %}
+<script>
+    const timers = {};
+    let score = 0;
+
+    function startTimer(questionId, correctAnswer) {
+        clearInterval(timers[questionId]);
+        const timerSpan = document.getElementById(`timer-${questionId}`);
+        const feedbackDiv = document.getElementById(`feedback-${questionId}`);
+        const form = document.getElementById(`form-${questionId}`);
+        let timeLeft = 15;
+
+        timerSpan.innerText = timeLeft;
+        timers[questionId] = setInterval(() => {
+            timeLeft--;
+            timerSpan.innerText = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(timers[questionId]);
+                const inputs = form.querySelectorAll(`input[name="question${questionId}"]`);
+                inputs.forEach(input => input.disabled = true);
+                feedbackDiv.innerHTML = `<span class="text-danger">Time's up! The correct answer is: <strong>${correctAnswer}</strong></span>`;
+                form.querySelector('button[type="submit"]').disabled = true;
+            }
+        }, 1000);
+    }
+
+    function checkAnswer(event, questionId, correctAnswer) {
+        event.preventDefault();
+        const form = document.getElementById(`form-${questionId}`);
+        const selected = form.querySelector(`input[name="question${questionId}"]:checked`);
+        const feedbackDiv = document.getElementById(`feedback-${questionId}`);
+
+        if (!selected) {
+            feedbackDiv.innerHTML = '<span class="text-warning">Please select an answer.</span>';
+            return;
+        }
+
+        clearInterval(timers[questionId]);
+        const inputs = form.querySelectorAll(`input[name="question${questionId}"]`);
+        inputs.forEach(input => input.disabled = true);
+
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+
+        if (selected.value === correctAnswer) {
+            feedbackDiv.innerHTML = '<span class="text-success">Correct!</span>';
+            score +=1;
+            updateScore();
+        } else {
+            feedbackDiv.innerHTML = `<span class="text-danger">Incorrect. The correct answer is: <strong>${correctAnswer}</strong></span>`;
+        }
+    }
+
+    function updateScore() {
+        const scoreSpan = document.getElementById("score")
+        if (scoreSpan) {
+            scoreSpan.innerText = score;
+        }
+    }
+</script>
+
+{% endblock %}
