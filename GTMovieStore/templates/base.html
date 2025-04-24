@@ -1,3 +1,4 @@
+<!-- Base HTML File for entire page; landing page-->
 <!DOCTYPE html>
 <html lang="en">
   {% load static %}
@@ -31,8 +32,6 @@
           <div class="navbar-nav ms-auto navbar-ml">
            <a class="nav-link bg-green" href="{% url 'trivias.index' %}">Trivia</a>
 
-<!--            <div class="vr bg-white mx-2 d-none d-lg-block"></div>-->
-
             {% if user.is_authenticated %}
 
               <a class="nav-link bg-red" href="{% url 'accounts.logout' %}"><p class="nav-text">Logout ({{ user.username }})</p></a>
@@ -53,10 +52,8 @@
 
     <!-- Footer -->
     <section class="ms-footer-bottom text-center">
-        <p class="mb-0">Designed by Jake Abujawdeh, Buddy Moss, Sergio Chavez, and Marvin Ortiz</p>
+        <p class="mb-0"><i>Designed by Jake Abujawdeh, Buddy Moss, Sergio Chavez, and Marvin Ortiz</i></p>
     </section>
 
-
-    <!-- Footer -->
   </body>
 </html>

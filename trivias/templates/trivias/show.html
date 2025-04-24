@@ -19,8 +19,8 @@
 
             {% for question in trivia_questions %}
             <div class="col-md-3 col-sm-6 mb-3">
-                <div class="card p-3 text-center" data-bs-toggle="modal" data-bs-target="#triviaModal{{ forloop.counter }}" onclick="startTimer({{ forloop.counter }}, '{{ question.correct_answer|escapejs }}')">
-                    <div class="card-body">
+                <div class="card trivia-card p-3 text-center" data-bs-toggle="modal" data-bs-target="#triviaModal{{ forloop.counter }}" onclick="startTimer({{ forloop.counter }}, '{{ question.correct_answer|escapejs }}')">
+                    <div class="card-body ">
                         <h5 class="card-title">Question {{ forloop.counter }}</h5>
                     </div>
                 </div>

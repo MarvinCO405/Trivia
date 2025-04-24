@@ -1,6 +1,7 @@
 /* THIS IS FOR DEBUGGING PURPOSES*/
 /** {border: 1px solid red;}*/
 
+/* Body */
 body {
   display: flex;
   flex-direction: column;
@@ -9,23 +10,21 @@ body {
   padding: 8px 0 0 0;
   margin: 0;
 }
-
 .bg-index{
   background: url("GTMovieStore/static/img/background.jpg") no-repeat center center fixed;
   background-size: cover;
   height: 100vh;
 }
 
+/* Header/Navbar properties */
 .bg-border {
   border: 2px solid #0b450b;
   background-color: #d9e8d1;
 }
-
 .navbar {
   width: 90%;
   border-radius: 20px;
 }
-
 .navbar a.nav-link {
   text-align: center;
   width: 100px;
@@ -43,12 +42,10 @@ body {
 .nav-text {
   margin: 0;
 }
-
 .navbar a.nav-link:hover {
   background-color: #4a4115 !important;
   color: #fae8b3 !important;
 }
-
 .navbar-brand img {
   border: 2px solid #75561f;
   border-radius: 10px;
@@ -56,13 +53,15 @@ body {
 }
 
 
-.bg-color {background-color: #698f68 !important;}
+/* Background colors for certain buttons*/
+.bg-light-green {background-color: #698f68 !important;}
 .bg-green {background-color: #0b450b !important;}
 .bg-red {background-color: #e81919 !important;}
 .bg-yellow {background-color: #f5c200 !important;}
 .bg-blue {background-color: #007bff !important;}
 
 
+/* Landing page image*/
 .hero-container {
   width: 100vw; /* Full viewport width */
   height: auto; /* Adjust as needed */
@@ -73,12 +72,12 @@ body {
   align-items: center;
   overflow: hidden; /* Ensures no extra space */
 }
-
 .hero-img {
   width: 100%;
   height: auto;
 }
 
+/* Footer properties*/
 .ms-footer-bottom {
   width: 90%;
   height: 50px;
@@ -110,13 +109,48 @@ body {
   width: fit-content;
   max-height: 400px;
 }
+
+/*
+Each container for a different page (ex: home, about, trivia, etc.)
+will be locked into a container
+*/
 .container {
   width: 90%;
 }
 
+/* Account Text Color*/
+.account-text {
+  color: #0b450b;
+}
+.account-text:hover {
+  color: #9d9d02;
+}
+
+/* Each theme-colored border will have these properties*/
 .card {
   background-color: #fae8b3;
   border: 6px solid #4a4115;
   border-radius: 20px;
   box-shadow: 0 4px 10px 3px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card-body {
+  font-weight: bold;
+  color: #4a4115;
+}
+
+/* Traits specific to trivia cards*/
+.trivia-card:hover {
+  transform: scale(1.05);
+  background-color: #e4cfa3;
+}
+
+/* The look for each "submit" button*/
+.user-input-btn {
+  background-color: #0b450b;
+  border: 3px solid #4a4115;
+  box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2), 0 5px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.user-input-btn:hover {
+  background-color: #4a4115;
 }
