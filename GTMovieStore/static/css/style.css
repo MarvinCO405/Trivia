@@ -32,11 +32,29 @@ body {
   font-size: 1.1rem;
   margin-left: 8px;
   border-radius: 20px;
-  color: #ffffff !important;
+  color: #4a4115 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  background-color: #fae8b3 !important;
+  border: 3px solid #4a4115;
 }
+.nav-text {
+  margin: 0;
+}
+
 .navbar a.nav-link:hover {
-  color: #75561f !important;
+  background-color: #4a4115 !important;
+  color: #fae8b3 !important;
 }
+
+.navbar-brand img {
+  border: 2px solid #75561f;
+  border-radius: 10px;
+  height: 50px;
+}
+
 
 .bg-color {background-color: #698f68 !important;}
 .bg-green {background-color: #0b450b !important;}
@@ -47,7 +65,7 @@ body {
 
 .hero-container {
   width: 100vw; /* Full viewport width */
-  height: 60vh; /* Adjust as needed */
+  height: auto; /* Adjust as needed */
   border: 3px solid #0b450b;
   border-radius: 20px;
   display: flex;
@@ -57,7 +75,7 @@ body {
 }
 
 .hero-img {
-  width: 150%;
+  width: 100%;
   height: auto;
 }
 
@@ -65,13 +83,18 @@ body {
   width: 90%;
   height: 50px;
   border-radius: 20px;
-  color: #fff;
+  color: #0b450b;
   position: fixed;
-  bottom: 0;
+  bottom: 8px;
   left: 0;
   right: 0;
   margin: auto;
-  background-color: #910f0f;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #d9e8d1;
+  border: 2px dashed #0b450b;
 }
 
 .author-names:hover {
@@ -86,4 +109,14 @@ body {
 .img-card-400 {
   width: fit-content;
   max-height: 400px;
+}
+.container {
+  width: 90%;
+}
+
+.card {
+  background-color: #fae8b3;
+  border: 6px solid #4a4115;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px 3px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

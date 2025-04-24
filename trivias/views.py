@@ -2,7 +2,6 @@ from django.shortcuts import render
 import requests
 import random
 import re
-
 trivias = [
     {'id' : 1, 'name' : 'Sports'},
     {'id' : 2, 'name' : 'Movies'}
