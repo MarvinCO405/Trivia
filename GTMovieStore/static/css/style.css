@@ -140,6 +140,12 @@ will be locked into a container
 }
 
 /* Traits specific to trivia cards*/
+.trivia-card {
+  background-color: #fae8b3;
+  border: 6px solid #4a4115;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px 3px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 .trivia-card:hover {
   transform: scale(1.05);
   background-color: #e4cfa3;
