@@ -154,3 +154,13 @@ will be locked into a container
 .user-input-btn:hover {
   background-color: #4a4115;
 }
+
+.score-text {
+  color: #4a4115;
+  font-weight: bold;
+}
+
+.text-danger {
+  font-weight: bold;
+  color: black !important;
+}
