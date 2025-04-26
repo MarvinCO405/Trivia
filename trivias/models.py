@@ -9,3 +9,15 @@ class Trivia(models.Model):
 
     def __str__(self):
         return self.name
+
+class TriviaScore(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    trivia = models.ForeignKey('Trivia', on_delete=models.CASCADE)
+    score = models.IntegerField(default=0)
+    last_played = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('user', 'trivia')
+
+    def __str__(self):
+        return self.name
