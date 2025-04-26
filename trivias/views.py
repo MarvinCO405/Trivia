@@ -3,16 +3,19 @@ import requests
 import random
 import re
 trivias = [
-    {'id' : 1, 'name' : 'Sports'},
-    {'id' : 2, 'name' : 'Movies'}
+    {'id' : 1, 'name' : 'Sports', 'difficulty': 'easy'},
+    {'id' : 2, 'name' : 'Movies', 'difficulty': 'medium'},
 ]
 
 def index(request):
     search_term = request.GET.get('search', '').strip()
+    difficulty_filter = request.GET.get('difficulty', '')
+
+    filtered_trivias = trivias
     if search_term:
         filtered_trivias = [t for t in trivias if search_term.lower() in t['name'].lower()]
-    else:
-        filtered_trivias = trivias
+    if difficulty_filter:
+        filtered_trivias = [t for t in filtered_trivias if t['difficulty'] == difficulty_filter]
 
     template_data = {}
     template_data['title'] = 'Trivias'
