@@ -1,0 +1,15 @@
+<h1>Leaderboard</h1>
+<table>
+    <tr>
+        <th>Rank</th>
+        <th>Username</th>
+        <th>Score</th>
+    </tr>
+    {% for player in top_players %}
+    <tr>
+        <td>{{ forloop.counter }}</td>  <!-- Auto-incrementing rank -->
+        <td>{{ player.user.username }}</td>
+        <td>{{ player.score }}</td>
+    </tr>
+    {% endfor %}
+</table>

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Profile
 import requests
 import random
 import re
@@ -55,3 +56,7 @@ def show(request, id):
     }
 
     return render(request, 'trivias/show.html', template_data)
+
+def leaderboard(request):
+    top_players = Profile.objects.order_by('-score')[:10]
+    return render(request, 'leaderboard.html', {'top_players': top_players})

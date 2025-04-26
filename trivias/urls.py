@@ -5,6 +5,6 @@ from . import views
 urlpatterns = [
     path("", views.index, name="trivias.index"),
     path('<int:id>/', views.show, name='trivias.show'),
-
+    path('leaderboard/', views.leaderboard, name='trivias.leaderboard'),
 
 ]
