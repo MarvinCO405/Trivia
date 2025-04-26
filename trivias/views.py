@@ -8,11 +8,17 @@ trivias = [
 ]
 
 def index(request):
+    search_term = request.GET.get('search', '').strip()
+    if search_term:
+        filtered_trivias = [t for t in trivias if search_term.lower() in t['name'].lower()]
+    else:
+        filtered_trivias = trivias
+
     template_data = {}
     template_data['title'] = 'Trivias'
-    template_data['trivias'] = trivias
+    template_data['trivias'] = filtered_trivias
     return render(request, 'trivias/index.html',
-                  {'template_data': template_data})
+                  {'template_data': template_data, 'request': request})
 
 
 
