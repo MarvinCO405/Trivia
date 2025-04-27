@@ -7,4 +7,5 @@ urlpatterns = [
     path('trivia/<int:trivia_id>/leaderboard/', views.leaderboard, name='leaderboard'),
     path('trivia/<int:trivia_id>/save_score/', views.save_score_and_redirect, name='save_score_and_redirect'),
     path('trivia/<int:id>/', views.show, name='show'),
+    path('history/', views.history, name='history'),
 ]

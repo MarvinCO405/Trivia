@@ -15,7 +15,7 @@ class TriviaScore(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     trivia = models.ForeignKey('Trivia', on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
-    last_played = models.DateTimeField(auto_now=True)
+    last_played = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         unique_together = ('user', 'trivia')

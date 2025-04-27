@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% block content %}
 
+{% block content %}
 <div class="container mt-5">
     <h1 class="text-center mb-4">{{ trivia.name }} Leaderboard</h1>
 
@@ -15,11 +15,11 @@
         <tbody>
             {% if scores %}
                 {% for player in scores %}
-                <tr>
-                    <th scope="row">{{ forloop.counter }}</th>  <!-- Auto-incrementing rank -->
-                    <td>{{ player.user.username }}</td>
-                    <td>{{ player.score }}</td>
-                </tr>
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>  <!-- Auto-incrementing rank -->
+                        <td>{{ player.user.username }}</td>
+                        <td>{{ player.score }}</td>
+                    </tr>
                 {% endfor %}
             {% else %}
                 <tr>
@@ -33,5 +33,4 @@
         <a href="{% url 'trivias.index' %}" class="btn btn-primary">Back to All Trivias</a>
     </div>
 </div>
-
 {% endblock %}
