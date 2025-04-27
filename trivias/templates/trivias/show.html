@@ -8,6 +8,11 @@
             <div class="col mx-auto mb-3 text-center">
                 <h2>{{ template_data.trivia.name }}</h2>
                 <hr />
+                {% if user_score %}
+                    <div class="alert alert-info text-center">
+                        Your highest score for this quiz: <strong>{{ user_score.score }}</strong>
+                    </div>
+                {% endif %}
             </div>
         </div>
         <div class="row">
@@ -135,12 +140,29 @@
 
         if (selected.value === correctAnswer) {
             feedbackDiv.innerHTML = '<span class="text-success">Correct!</span>';
-            score += 1;
+            score += 100;
             document.getElementById("score").innerText = score;
         } else {
             feedbackDiv.innerHTML = `<span class="text-danger">Incorrect. The correct answer is: <strong>${correctAnswer}</strong></span>`;
         }
     }
 </script>
+    <div class="row mt-4">
+        <div class="col text-center">
+            <button class="btn btn-success btn-lg" onclick="submitFinalScore()">End Game & Save Score</button>
+        </div>
+    </div>
+
+    <form id="score-form" method="post" action="{% url 'save_score' trivia.id %}" style="display:none;">
+        {% csrf_token %}
+        <input type="hidden" name="score" id="final-score">
+    </form>
+
+    <script>
+        function submitFinalScore() {
+            document.getElementById('final-score').value = score;
+            document.getElementById('score-form').submit();
+        }
+    </script>
 
 {% endblock %}
