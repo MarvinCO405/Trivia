@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row mt-3">
             <div class="col mx-auto mb-3 text-center">
-                <h2>{{ template_data.trivia.name }}</h2>
+                <h2>{{ trivia.name }}</h2>  <!-- Corrected this line -->
                 <hr />
                 {% if user_score %}
                     <div class="alert alert-info text-center">
@@ -36,7 +36,7 @@
                     </div>
                 </div>
 
-                <!-- Modal for each question {{ qnum }} -->
+                <!-- Modal for each question -->
                 <div class="modal fade" id="triviaModal{{ qnum }}" tabindex="-1" aria-labelledby="modalLabel{{ qnum }}" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="card modal-content question-card">
@@ -52,7 +52,7 @@
                                 <form id="form-{{ qnum }}"
                                       onsubmit="checkAnswer(event, {{ qnum }}, '{{ question.correct_answer|escapejs }}')">
                                     <ul class="list-group" id="answers-list-{{ qnum }}">
-                                        {% for answer in question.incorrect_answers %}
+                                        {% for answer in question.answers %}
                                             <li class="list-group-item">
                                                 <label class="form-check-label">
                                                     <input
@@ -66,18 +66,6 @@
                                                 </label>
                                             </li>
                                         {% endfor %}
-                                        <li class="list-group-item">
-                                            <label class="form-check-label">
-                                                <input
-                                                  type="radio"
-                                                  class="form-check-input me-2"
-                                                  name="question{{ qnum }}"
-                                                  value="{{ question.correct_answer }}"
-                                                  required
-                                                >
-                                                {{ question.correct_answer }}
-                                            </label>
-                                        </li>
                                     </ul>
                                     <div id="feedback-{{ qnum }}" class="mt-2"></div>
                                     <button type="submit" class="btn btn-primary mt-2">Submit</button>
@@ -99,7 +87,6 @@
             <div class="col text-center">
                 <button class="btn btn-success btn-lg me-3" onclick="submitFinalScore()">Save & View Leaderboard</button>
                 <a href="{% url 'trivias.index' %}" class="btn btn-secondary btn-lg" onclick="return confirm('Are you sure you want to leave without saving your score?')">Exit Without Saving</a>
-
             </div>
         </div>
 

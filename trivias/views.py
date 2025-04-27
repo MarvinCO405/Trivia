@@ -37,6 +37,11 @@ def show(request, id):
         q['correct_answer'] = html.unescape(q['correct_answer'])
         q['incorrect_answers'] = [html.unescape(ans) for ans in q['incorrect_answers']]
 
+    # Shuffles answers around
+    for q in questions:
+        q['answers'] = q['incorrect_answers'] + [q['correct_answer']]
+        random.shuffle(q['answers'])
+
     trivia_questions = random.sample(questions, 16) if len(questions) >= 16 else questions
 
     user_score = None
