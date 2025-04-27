@@ -15,12 +15,32 @@ def index(request):
     if difficulty_filter:
         filtered_trivias = [t for t in filtered_trivias if t.difficulty == difficulty_filter]
 
+    trivia_list = []
+    for trivia in filtered_trivias:
+        image_url = get_image_for_category(trivia.name)
+        trivia_list.append({
+            'id': trivia.id,
+            'name': trivia.name,
+            'difficulty': trivia.difficulty,
+            'image_url': image_url
+        })
+
     template_data = {}
     template_data['title'] = 'Trivias'
-    template_data['trivias'] = filtered_trivias
+    template_data['trivias'] = trivia_list
     return render(request, 'trivias/index.html',
                   {'template_data': template_data, 'request': request})
 
+
+def get_image_for_category(category):
+    access_key = '6g3eHClcvIEYhQSEp0-Z0FG-vFoqSjhahwjirR0Qkes'
+    unsplash_url = f"https://api.unsplash.com/photos/random?query={category}&client_id={access_key}"
+    response = requests.get(unsplash_url)
+    if response.status_code == 200:
+        data = response.json()
+        return data['urls']['regular']
+    else:
+        return None
 
 
 
