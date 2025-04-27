@@ -51,9 +51,12 @@
     </div>
 
     <!-- Footer -->
-    <section class="ms-footer-bottom text-center">
-        <p class="mb-0"><i>Designed by Jake Abujawdeh, Buddy Moss, Sergio Chavez, and Marvin Ortiz</i></p>
-    </section>
+
+    {% if request.path == '/' %}
+        <section class="ms-footer-bottom text-center">
+            <p class="mb-0"><i>Designed by Jake Abujawdeh, Buddy Moss, Sergio Chavez, and Marvin Ortiz</i></p>
+        </section>
+    {% endif %}
 
   </body>
 </html>
