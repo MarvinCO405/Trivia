@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Profile, Trivia, TriviaScore
 import requests
 import random
+import html
 
 def index(request):
     trivias=Trivia.objects.all()
@@ -30,6 +31,12 @@ def show(request, id):
     response = requests.get(trivia.url)
     data = response.json()
     questions = data.get('results', [])
+
+    for q in questions:
+        q['question'] = html.unescape(q['question'])
+        q['correct_answer'] = html.unescape(q['correct_answer'])
+        q['incorrect_answers'] = [html.unescape(ans) for ans in q['incorrect_answers']]
+
     trivia_questions = random.sample(questions, 16) if len(questions) >= 16 else questions
 
     user_score = None
@@ -46,7 +53,7 @@ def show(request, id):
 
     return render(request, 'trivias/show.html', template_data)
 
-def save_score(request, trivia_id):
+def save_score_and_redirect(request, trivia_id):
     if request.method == "POST" and request.user.is_authenticated:
         score = int(request.POST.get('score', 0))
         trivia = get_object_or_404(Trivia, id=trivia_id)
@@ -54,8 +61,10 @@ def save_score(request, trivia_id):
         if score > user_score.score:
             user_score.score = score
             user_score.save()
-        return redirect('show', id=trivia_id)
-    return redirect('index')
-def leaderboard(request):
-    top_players = Profile.objects.order_by('-score')[:10]
-    return render(request, 'leaderboard.html', {'top_players': top_players})
+        return redirect('leaderboard', trivia_id=trivia_id)  # <--- redirect to leaderboard!
+    return redirect('trivias.index')
+
+def leaderboard(request, trivia_id):
+    trivia = get_object_or_404(Trivia, id=trivia_id)
+    scores = TriviaScore.objects.filter(trivia=trivia).order_by('-score')[:10]  # <--- fix model
+    return render(request, 'trivias/leaderboard.html', {'scores': scores, 'trivia': trivia})

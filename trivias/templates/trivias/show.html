@@ -15,13 +15,14 @@
                 {% endif %}
             </div>
         </div>
-        <div class="row">
-            <div class="row mb-3">
-                <div class="col text-center">
-                    <h4 class="score-text">Score: <span id="score">0</span></h4>
-                </div>
-            </div>
 
+        <div class="row">
+            <div class="col text-center">
+                <h4 class="score-text">Score: <span id="score">0</span></h4>
+            </div>
+        </div>
+
+        <div class="row">
             {% for question in trivia_questions %}
               {% with qnum=forloop.counter %}
                 <div class="col-md-3 col-sm-6 mb-3">
@@ -35,7 +36,7 @@
                     </div>
                 </div>
 
-                <!-- Modal for each question -->
+                <!-- Modal for each question {{ qnum }} -->
                 <div class="modal fade" id="triviaModal{{ qnum }}" tabindex="-1" aria-labelledby="modalLabel{{ qnum }}" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="card modal-content question-card">
@@ -92,8 +93,16 @@
                 </div>
               {% endwith %}
             {% endfor %}
-
         </div>
+
+        <div class="row mt-4 mb-5">
+            <div class="col text-center">
+                <button class="btn btn-success btn-lg me-3" onclick="submitFinalScore()">Save & View Leaderboard</button>
+                <a href="{% url 'trivias.index' %}" class="btn btn-secondary btn-lg" onclick="return confirm('Are you sure you want to leave without saving your score?')">Exit Without Saving</a>
+
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -147,22 +156,17 @@
         }
     }
 </script>
-    <div class="row mt-4">
-        <div class="col text-center">
-            <button class="btn btn-success btn-lg" onclick="submitFinalScore()">End Game & Save Score</button>
-        </div>
-    </div>
 
-    <form id="score-form" method="post" action="{% url 'save_score' trivia.id %}" style="display:none;">
-        {% csrf_token %}
-        <input type="hidden" name="score" id="final-score">
-    </form>
+<form id="score-form" method="post" action="{% url 'save_score_and_redirect' trivia.id %}" style="display:none;">
+    {% csrf_token %}
+    <input type="hidden" name="score" id="final-score">
+</form>
 
-    <script>
-        function submitFinalScore() {
-            document.getElementById('final-score').value = score;
-            document.getElementById('score-form').submit();
-        }
-    </script>
+<script>
+    function submitFinalScore() {
+        document.getElementById('final-score').value = score;
+        document.getElementById('score-form').submit();
+    }
+</script>
 
 {% endblock %}
