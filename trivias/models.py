@@ -21,7 +21,7 @@ class TriviaScore(models.Model):
         unique_together = ('user', 'trivia')
 
     def __str__(self):
-        return self.name
+        return f"{self.user.username} - {self.trivia.name} ({self.score})"
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

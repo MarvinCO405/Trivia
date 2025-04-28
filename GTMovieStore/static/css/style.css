@@ -170,3 +170,10 @@ will be locked into a container
   font-weight: bold;
   color: black !important;
 }
+
+
+.answered {
+    background-color: #d3d3d3 !important;
+    color: #666;
+    pointer-events: none;
+}
