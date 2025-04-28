@@ -45,12 +45,23 @@ def signup(request):
 
     elif request.method == 'POST':
         form = CustomUserCreationForm(request.POST, error_class=CustomErrorList)
+        role = request.POST.get('role', 'user')
+
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+
+            if role == 'admin':
+                user.is_staff = True
+            else:
+                user.is_staff = False
+
+            user.save()
             return redirect('accounts.login')
+
         else:
             template_data['form'] = form
             return render(request, 'accounts/signup.html', {'template_data': template_data})
+
 
 @login_required
 def logout(request):

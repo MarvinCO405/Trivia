@@ -23,7 +23,7 @@ def index(request):
     if search_term:
         filtered_trivias = [t for t in trivias if search_term.lower() in t.name.lower()]
     if difficulty_filter:
-        filtered_trivias = [t for t in filtered_trivias if t.difficulty == difficulty_filter]
+        filtered_trivias = [t for t in filtered_trivias if t.difficulty.lower() == difficulty_filter.lower()]
 
     trivia_list = []
     for trivia in filtered_trivias:
@@ -59,7 +59,7 @@ def get_image_for_category(category):
 def show(request, id):
     trivia = get_object_or_404(Trivia, id=id)
 
-    # Fetch trivia questions from the correct API
+
     response = requests.get(trivia.url)
     data = response.json()
     questions = data.get('results', [])
@@ -69,7 +69,7 @@ def show(request, id):
         q['correct_answer'] = html.unescape(q['correct_answer'])
         q['incorrect_answers'] = [html.unescape(ans) for ans in q['incorrect_answers']]
 
-    # Shuffles answers around
+
     for q in questions:
         q['answers'] = q['incorrect_answers'] + [q['correct_answer']]
         random.shuffle(q['answers'])
@@ -95,7 +95,7 @@ def save_score_and_redirect(request, trivia_id):
         score = int(request.POST.get('score', 0))
         trivia = get_object_or_404(Trivia, id=trivia_id)
 
-        # Always create a new score attempt
+
         TriviaScore.objects.create(
             user=request.user,
             trivia=trivia,

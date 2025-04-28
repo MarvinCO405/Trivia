@@ -177,3 +177,19 @@ will be locked into a container
     color: #666;
     pointer-events: none;
 }
+
+
+.rainbow-text {
+    display: inline-block;
+    background-image: linear-gradient(
+        to right,
+        #007BFF,
+        #00C9A7,
+        #17C3B2,
+        #119DA4,
+        #11C76F
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
