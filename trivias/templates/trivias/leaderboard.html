@@ -16,7 +16,7 @@
             {% if scores %}
                 {% for player in scores %}
                     <tr>
-                        <th scope="row">{{ forloop.counter }}</th>  <!-- Auto-incrementing rank -->
+                        <th scope="row">{{ forloop.counter }}</th>
                         <td>{{ player.user.username }}</td>
                         <td>{{ player.score }}</td>
                     </tr>

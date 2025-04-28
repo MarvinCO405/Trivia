@@ -94,17 +94,20 @@ def save_score_and_redirect(request, trivia_id):
     if request.method == "POST" and request.user.is_authenticated:
         score = int(request.POST.get('score', 0))
         trivia = get_object_or_404(Trivia, id=trivia_id)
-        user_score, created = TriviaScore.objects.get_or_create(user=request.user, trivia=trivia)
-        if score > user_score.score:
-            user_score.score = score
 
-        user_score.last_played = now()
-        user_score.save()
+        # Always create a new score attempt
+        TriviaScore.objects.create(
+            user=request.user,
+            trivia=trivia,
+            score=score,
+            last_played=now()
+        )
 
         return redirect('leaderboard', trivia_id=trivia_id)
     return redirect('trivias.index')
 
+
 def leaderboard(request, trivia_id):
     trivia = get_object_or_404(Trivia, id=trivia_id)
-    scores = TriviaScore.objects.filter(trivia=trivia).order_by('-score')[:10]
+    scores = TriviaScore.objects.filter(trivia=trivia).order_by('-score', '-last_played')[:10]
     return render(request, 'trivias/leaderboard.html', {'scores': scores, 'trivia': trivia})

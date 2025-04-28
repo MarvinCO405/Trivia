@@ -17,8 +17,6 @@ class TriviaScore(models.Model):
     score = models.IntegerField(default=0)
     last_played = models.DateTimeField(null=True, blank=True)
 
-    class Meta:
-        unique_together = ('user', 'trivia')
 
     def __str__(self):
         return f"{self.user.username} - {self.trivia.name} ({self.score})"
